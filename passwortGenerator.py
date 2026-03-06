@@ -1,17 +1,11 @@
-# Schritt 1: Füge die einzelnen Zeichen in der zeichen Variable mithilfe einer for schleife einer Liste hinzu
-# Schritt 2: Importiere das Random Modul
-# Schritt 3: Fordere den Nutzer dazu auf, eine Passwortlänge anzugeben - achte hier darauf, Fehler abzufangen
-# Schritt 4: Schreibe eine Logik, die ein zufälliges Passwort mit der gewünschten Länge generiert - benutze das Random Modul um ein zufälliges Zeichen aus der Liste auszuwählen
-# Tipp: benutze random. um herauszufinden, welche Methoden das random Modul bietet oder benutze Stack Overflow
-
 import random
-
+# variables
 liste = []
 passwort = ""
 zeichen = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 sonderzeichen = "!*&%$/"
 passwortliste = []
-
+# 1. checknumber function: checks if number is 0 -> prints must be bigger / number too big -> prints must be smaller
 def checkNumber(input, restriction):
     if input == 0:
         print("Die Zahl darf nicht 0 sein")
@@ -20,11 +14,11 @@ def checkNumber(input, restriction):
         print(f"Die Zahl darf nicht größer als {restriction} sein.")
         return False
     return True
-
+#  listify function: adds variabe to list
 def listify(variable):
     for i in variable:
         liste.append(i)
-
+# loopify function: creates loop which checks if userinput is a number + number is in range
 def loopify(question, restriction):
     while True:
         try:
@@ -34,8 +28,8 @@ def loopify(question, restriction):
         except:
             print("Du musst eine Zahl eingeben. ")
     return answer
-#Passwortstärke: 1. Sonderzeichen? 2. Länger als 8 Zeichen?
-# Beides zutreffend -> Starkes Passwort, eines zutreffend -> Mittelstarkes Passwort keines zutreffend -> schwaches passwort
+# define passwordstrength: 1. condition: password contains special character 2. condition: more than 8 characters
+# both conditions true -> strong password, 1 of 2 conditions true -> moderate strong password, none true -> weak password
 def passwortstaerke():
     specialCharacters = False
     for i in passwort:
@@ -48,7 +42,7 @@ def passwortstaerke():
     else:
         return "Schwaches Passwort"
 
-
+# ask user if password should contain special characters. yes -> use listify function to add them to list
 while True:
     mitsonderzeichen = input("Möchtest du in deinem Passwort sonderzeichen haben?(ja/nein) ")
     if mitsonderzeichen.lower() == "ja":
@@ -64,7 +58,7 @@ listify(zeichen)
 passwortanzahl = loopify("Wie viele Passwörter möchtest du generieren? ", 10)
 
 länge = loopify("Wie lang soll das Passwort sein? ", 256)
-
+# generates and prints password -> chooses random characters out of list
 for i in range(passwortanzahl):
     for i in range(länge):
         passwortZeichen = random.choice(liste)
@@ -72,10 +66,10 @@ for i in range(passwortanzahl):
     print(passwort, end=" ")
     print(passwortstaerke())
 
-
+# adds password to list
     passwortliste.append(passwort)
     passwort = ""
-
+# creates file with list of password.
 with open("Versuch.txt", "w") as f:
     for i in passwortliste:
         f.write(f"{i}\n")
